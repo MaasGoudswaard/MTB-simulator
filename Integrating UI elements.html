@@ -1,16 +1,80 @@
+<head>
+    <style>
+        /* Still have to figure out why font does not work... */
+    @font-face {
+        font-family: "Trobusfont";
+        src: url("/fonts/TrobusExpandedPersonalUse.ttf");
+    }
+
+    #maincontainer{
+        width: 100%;
+        justify-content: center;
+    }
+    #video-container {
+        position:relative;
+        width: 1200px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #myVideo{
+        width: 100%;
+    }
+    .video-overlayscore {
+        position:absolute;
+        bottom:20px;
+        left: 50px;;
+        /* background:#000; */
+        color:#FFF;
+        stroke: #000;
+    }
+    .video-overlayposture {
+
+        position:absolute;
+        bottom:20px;
+        right:20px;
+        /* background:#000; */
+        color:#FFF;
+        stroke: #000;
+    }
+    .counter-display {
+        font-family: 'Courier New', monospace;
+        color: whitesmoke;
+        -webkit-text-stroke: 2px black;
+        font-size: 50;
+    }
+    .posture-display {
+        font-family: 'Courier New', monospace;
+        color: whitesmoke;
+        -webkit-text-stroke: 2px black;
+        font-size: 50;
+    }
+    </style>
+</head>
 <div>Teachable Machine Pose Model</div>
 <button type="button" onclick="init()">Start</button>
-<div>Score:</div>
-<h1 class="counter-display">(..)</h1>
-<h1 class="posture-display">(..)</h1>
 
-<video id="myVideo" width="700" height="400">
-    <source src="C:\Users\maasg\OneDrive - TU Eindhoven\Desktop\Designing with advanced artificial intelligence\group project\MTB-simulator\MTB-POV-Video.mp4" type="video/mp4">
-  </video>
+<div id="maincontainer">
+
+
+    <div id="video-container">
+        <video id="myVideo">
+            <source src="C:\Users\maasg\OneDrive - TU Eindhoven\Desktop\Designing with advanced artificial intelligence\group project\MTB-simulator\MTB-POV-Video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlayscore">
+            <h1 class="counter-display">(..)</h1>
+        </div>
+        <div class="video-overlayposture">
+            <h1 class="posture-display">(..)</h1>
+        </div>
+    </div>
+</div>
 <div id="label-container"></div>
 <div><canvas id="canvas"></canvas></div>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+
 <script type="text/javascript">
     
 
@@ -48,7 +112,7 @@
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
         }
-        setInterval(PointCounterEvent, 99);
+        setInterval(PointCounterEvent, 104.5);
         vid.play(); 
     }
 
@@ -78,7 +142,7 @@
         neutralprobability = prediction[0].probability.toFixed(2);
         rightprobability = prediction[3].probability.toFixed(2);
         // finally draw the poses
-        drawPose(pose);
+        // drawPose(pose);
     }
 
     function drawPose(pose) {
@@ -105,9 +169,9 @@
     let postureDisplayElem = document.querySelector('.posture-display');
     
     let Pointcounter = 0;
-    let Postureval = 'Neutral';
+    let Postureval = 'neutral';
     let indexcounter = 0;
-    var testarray =["neutral", "neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right",
+    var testarray =["neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right",
 "right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral",
 "neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","right","left","left","left","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","right","right","right","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral",
 "neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral"
