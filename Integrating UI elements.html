@@ -11,7 +11,7 @@
     }
     #video-container {
         position:relative;
-        width: 1200px;
+        width: 1050px;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -50,7 +50,7 @@
     }
     </style>
 </head>
-<div>Teachable Machine Pose Model</div>
+<div>MTB Simulator</div>
 <button type="button" onclick="init()">Start</button>
 
 <div id="maincontainer">
@@ -132,13 +132,13 @@
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            // labelContainer.childNodes[i].innerHTML = classPrediction;
+                labelContainer.childNodes[i].innerHTML = classPrediction;
         }
         leftprobability = prediction[2].probability.toFixed(2);
         neutralprobability = prediction[0].probability.toFixed(2);
         rightprobability = prediction[3].probability.toFixed(2);
         // finally draw the poses
-        // drawPose(pose);
+        drawPose(pose);
     }
 
     function drawPose(pose) {
