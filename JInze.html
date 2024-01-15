@@ -49,16 +49,20 @@
         font-size: 50;
     }
     .video-overlaymessage {
-        position: absolute;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
         font-family: 'Courier New', monospace;
         color: whitesmoke;
         -webkit-text-stroke: 2px black;
-        font-size: 50px;
-        
+        font-size: 50;
     }
+    .pointMessage {
+        position:absolute;
+        bottom:20px;
+        left: 50px;;
+        /* background:#000; */
+        color:#FFF;
+        stroke: #000;
+    }
+
     </style>
 </head>
 <div>MTB Simulator</div>
@@ -71,11 +75,11 @@
         </video>
         <div class="video-overlayscore">
             <h1 class="counter-display">(..)</h1>
+            <h2 class="pointMessage">(..)</h2>
         </div>
         <div class="video-overlayposture">
             <h1 class="posture-display">(..)</h1>
-        <div class="pointMessage" >
-            <h1 class="video-overlaymessage">(..)</h1>
+        
         </div>
     </div>
 </div>
@@ -170,6 +174,7 @@
     let pointMessageElem = document.querySelector('.pointMessage');
     
     let Pointcounter=0;
+    let buffer=0;
     let Postureval = 'neutral';
     let indexcounter = 0;
     var testarray =["neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","right","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","left","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","neutral","right","right","right","right","right","right","right","right","right","right","right","right","right","right",
@@ -187,15 +192,15 @@
     Postureval = testarray[indexcounter];
     if (Postureval == 'left' && leftprobability > 0.7){
         Pointcounter++;
-        showPointMessage();
+        buffer++
     }
     if (Postureval == 'neutral' && neutralprobability > 0.7){
         Pointcounter++;
-        showPointMessage();
+        buffer++
     }
     if (Postureval == 'right' && rightprobability > 0.7){
         Pointcounter++;
-        showPointMessage();
+        buffer++
     }
 
     updateDisplay();
@@ -204,18 +209,24 @@
 function updateDisplay() {
     counterDisplayElem.innerHTML = Pointcounter;
     postureDisplayElem.innerHTML = Postureval;
+    showPointMessage(buffer);
+    
 };
 
 
 // show +1 after the score
-function showPointMessage() {
-    pointMessageElem.textContent = '+1';
-
-    //delay
-   // setTimeout(() => {
-    //    pointMessageElem.textContent = '';
-   // }, 2000);
+function showPointMessage(buffer) {
+    pointMessageElem.textContent = '+' + buffer;
+   
+    setTimeout(() => {
+       buffer = 0;
+    }, 2000);
 }
+setInterval(() => {
+    buffer = 0;
+}, 3000);
+
+
 
 </script>
 
